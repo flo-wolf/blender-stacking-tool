@@ -1,14 +1,15 @@
 ##############################################################################
-###                            Stacking-Tool                               ###
+###                            Stacking Tool                               ###
 ###                                                                        ###
 ###       A script for stacking multiple meshes ontop of each other        ###
 ###                       Written by: Florian Wolf                         ###
+###                               flowo.de                                 ###
 ###                                                                        ###
 ##############################################################################
 
 bl_info = {
     "name": "Stacking Tool",
-    "author": "Florian Wolf, flowo.de",
+    "author": "Florian Wolf",
     "version": (1,0,0),
     "blender": (2, 90, 0),
     "category": "Object",
@@ -42,7 +43,7 @@ class StackObjects(bpy.types.Operator):
     stacking_axis_type : EnumProperty(
         items=axis_type_callback,
         name="Axis",
-        description="The axis the selected objects should be stacked on",
+        description="The axis the selected objects should be stacked onto",
         default=2,
         options={'ANIMATABLE'},
         update=None,
@@ -118,13 +119,11 @@ class StackObjects(bpy.types.Operator):
 
     # Find the lowest and highest Z value amongst the object's verticies in world space
     def get_global_extremes(self, obj, axis_type):
-        #mw = obj.matrix_world      # object's world matrix
-        #glob_vertex_coordinates = [ mw @ v.co for v in obj.data.vertices ] # Global coordinates of vertices
 
+        # get the coordinates of the object verticies in world space. Do that by multiplying the local vertex coodinates with the world space matrix
         glob_vertex_coordinates = [(obj.matrix_world @ v.co) for v in obj.data.vertices]
 
-        print(obj, "axis_type:", axis_type, "globalCoords: ", glob_vertex_coordinates)
-
+        # get the verticies that have the lowest axis value and the highest (minimum, maximum)
         minimum = 0
         maximum = 0
         if axis_type == 'X':
@@ -136,9 +135,6 @@ class StackObjects(bpy.types.Operator):
         elif axis_type == 'Z':
             minimum = min( [ co.z for co in glob_vertex_coordinates ] )  
             maximum = max( [ co.z for co in glob_vertex_coordinates ] )  
-        else:
-            print("!!!!!!!!!!!!!!!!!!!!!!")
-            print("ERROR")
         return [minimum, maximum] # lowest point on our axis, highest point on our axis
 
 
@@ -164,6 +160,8 @@ class StackObjects(bpy.types.Operator):
     # addon lifecycle method - styles the tool panel 
     def draw(self, context):
         layout = self.layout
+
+        # stacking
         box = layout.box()
         box_row = box.row()
         box_row.label(text="Stacking")
@@ -173,14 +171,13 @@ class StackObjects(bpy.types.Operator):
         box_row.prop(self, "offset")
         box_row.prop(self, "shuffle_objects_seed")
 
-
+        # rotating
         box_2 = layout.box()
         box_2_row = box_2.row()
         box_2_row.label(text="Rotation")
         box_2_row.prop(self, "rotation_axis_type")
         box_2.prop(self, "enable_rotation")
         box_2.prop(self, "rotate_base")
-
         box_2_row_2 = box_2.row()
         box_2_row_2.prop(self, "rotation_angle_step")
         box_2_row_2.prop(self, "rotation_seed")
@@ -191,7 +188,6 @@ class StackObjects(bpy.types.Operator):
 
     # addon lifecycle method - called when running the operator, i.e. by the panel dialog
     def execute(self, context):
-        print("---")
         # get the active object
         active_obj = context.active_object
 
@@ -231,8 +227,6 @@ class StackObjects(bpy.types.Operator):
                 # obj.dimensions are only correct for non-rotated objects. For rotated objects, we need to calculate the height manually by getting the position of the highest/lowest verticies.
                 extremes = self.get_global_extremes(obj, self.stacking_axis_type)
                 length = extremes[1] - extremes[0]
-
-                print(obj.name, "extremes: ", extremes)
 
                 # set the location by offsetting the object using its origin and extremes, so that it "lays" ontop of the last element
                 new_location = obj.location
