@@ -82,7 +82,7 @@ class StackObjects(bpy.types.Operator):
     enable_rotation = BoolProperty(  
         name="Enable Rotation",  
         default=True,  
-        description="Randomly rotate all objects around the Z axis"  
+        description="Randomly rotate all objects around the specified rotation axis"  
     ) 
 
     rotate_base = BoolProperty(  
