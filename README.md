@@ -9,6 +9,8 @@ The tool is divided into two main components: Stacking and Rotation. Each has di
 
 ## Settings
 
+![Stacking_Tool_Panel_Image](https://github.com/flo-wolf/blender-stacking-tool/blob/master/images/stacking_tool_panel.png?raw=true)
+
 ### Stacking
 - **Axis** - The axis the selected objects should be stacked onto
 
