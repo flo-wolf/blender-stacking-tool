@@ -9,6 +9,7 @@ The Stacking Tool is accessible through the Object Menu `Object > Stack Objects`
 
 The tool is divided into two main components: Stacking and Rotation. Each has different options which alter how the resulting stack will look like. The selected objects get stacked by clicking the 'OK' button, or when performing changes to the settings after the 'OK' button has been clicked. All changes this tool makes to the objects can be undone.
 
+
 ## Settings
 
 ![Stacking_Tool_Panel_Image](https://github.com/flo-wolf/blender-stacking-tool/blob/master/images/stacking_tool_panel_shadow.png?raw=true)
@@ -33,4 +34,10 @@ The tool is divided into two main components: Stacking and Rotation. Each has di
 - **Rotation Angle Step** - The angle at which objects should get randomly rotated around the rotation axis
 
 - **Rotation Seed** – Changing the rotation seed will result in different random rotations 
+
+
+<br/><br/><br/>
+
+
+![Stacking_Tool_Overview Image](https://github.com/flo-wolf/blender-stacking-tool/blob/master/images/stacking_tool_stacks_showcase_m.png?raw=true)
 
