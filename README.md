@@ -36,7 +36,7 @@ The tool is divided into two main components: Stacking and Rotation. Each has di
 - **Rotation Seed** – Changing the rotation seed will result in different random rotations 
 
 
-<br/><br/><br/>
+<br/><br/>
 
 
 ![Stacking_Tool_Overview Image](https://github.com/flo-wolf/blender-stacking-tool/blob/master/images/stacking_tool_stacks_showcase_m.png?raw=true)
