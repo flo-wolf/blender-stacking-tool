@@ -197,7 +197,11 @@ class StackObjects(bpy.types.Operator):
         for obj in context.selected_objects:
             if self.enable_rotation and (obj != active_obj or (obj == active_obj and self.rotate_base)):
                 # rotate by our seeded angle around our specified axis
-                seededRandomAngle = math.radians((math.degrees(self.rotation_angle_step) * (random.Random(self.rotation_seed + obj_id).randint(0, 180))) % 360)
+                seededRandomAngle = (self.rotation_angle_step * (random.Random(self.rotation_seed + obj_id).randint(1, 90))) % math.radians(360)
+                
+                # work around floating point errors when using modulo, where what should be 0 degree is displayed at 0.00002 degrees (somewhat hacky, but it works)
+                if seededRandomAngle < 0.0001:
+                    seededRandomAngle = 0
 
                 if self.rotation_axis_type == 'X':
                     obj.rotation_euler[0] = seededRandomAngle
