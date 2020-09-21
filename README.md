@@ -10,22 +10,23 @@ The tool is divided into two main components: Stacking and Rotation. Each has di
 ## Settings
 
 ### Stacking
-**Axis** - The axis the selected objects should be stacked onto
+- **Axis** - The axis the selected objects should be stacked onto
 
-**Center Objects on Axis** –Toggle if all selected objects should be aligned on the specified axis with the active object, so that they are all in line with each other
+- **Center Objects on Axis** – Toggle if all selected objects should be aligned on the specified axis with the active object, so that they are all in line with each other
 
-**Offset** – The distance between each stacked object
+- **Offset** – The distance between each stacked object
 
-**Stacking Order Seed** – Changing the seed shuffles the objects, so that the objects will have a different position in the stack. The active object will always be at the bottom.
+- **Stacking Order Seed** – Changing the seed shuffles the objects, so that the objects will have a different position in the stack. The active object will always be at the bottom.
+
 
 ### Rotation
-**Axis** - The axis the selected objects should be locally rotated around
+- **Axis** - The axis the selected objects should be locally rotated around
 
-**Enable Rotation** – Toggle if the selected objects should get rotated
+- **Enable Rotation** – Toggle if the selected objects should get rotated
 
-**Rotate Active Object** –Toggle if the active object (yellow selection outline) gets rotated too
+- **Rotate Active Object** –Toggle if the active object (yellow selection outline) gets rotated too
 
-**Rotation Angle Step** - The angle at which objects should get randomly rotated around the rotation axis
+- **Rotation Angle Step** - The angle at which objects should get randomly rotated around the rotation axis
 
-**Rotation Seed** – Changing the rotation seed will result in different random rotations 
+- **Rotation Seed** – Changing the rotation seed will result in different random rotations 
 
