@@ -31,7 +31,7 @@ class StackObjects(bpy.types.Operator):
     bl_label = "Stack Objects"              # Display name in the interface.
     bl_options = {'REGISTER', 'UNDO'}       # Enable undo for the operator.
 
-
+    # axis enum
     def axis_type_callback(self, context):
         return (
             ('X', 'X', 'Objects will be transformed along the X-Axis'),
@@ -51,17 +51,10 @@ class StackObjects(bpy.types.Operator):
         set=None
     )
 
-    rotation_axis_type : EnumProperty(
-        items=axis_type_callback,
-        name="Axis",
-        description="The axis the selected objects should be locally rotated around",
-        default=2,
-    )
-
     center_objects = BoolProperty(  
         name="Center Objects on Axis",  
         default=True,  
-        description="Align all objects with the active object, so that they are all directly ontop of each other"  
+        description="Toggle if all selected objects should be aligned on the specified axis with the active object, so that they are all in line with each other"  
     ) 
 
     offset = FloatProperty(  
@@ -69,7 +62,7 @@ class StackObjects(bpy.types.Operator):
         default=0,  
         subtype='DISTANCE',  
         unit='LENGTH',  
-        description="The distance between the stacked objects"  
+        description="The distance between each stacked object"  
     ) 
 
     shuffle_objects_seed = IntProperty(  
@@ -77,26 +70,33 @@ class StackObjects(bpy.types.Operator):
         min=1,
         max=10000,
         default=1,  
-        description="Shuffles the objects, so that the objects will have a different position in the stack"  
+        description="Changing the seed shuffles the objects, so that the objects will have a different position in the stack. The active object will always be at the bottom"  
+    )
+
+    rotation_axis_type : EnumProperty(
+        items=axis_type_callback,
+        name="Axis",
+        description="The axis the selected objects should be locally rotated around",
+        default=2,
     )
 
     enable_rotation = BoolProperty(  
         name="Enable Rotation",  
         default=True,  
-        description="Randomly rotate all objects around the specified rotation axis"  
+        description="Toggle if the selected objects should get rotated"  
     ) 
 
     rotate_base = BoolProperty(  
-        name="Rotate Active Base Object",  
+        name="Rotate Active Object",  
         default=True,  
-        description="Rotate the base as well as the top objects"  
+        description="Toggle if the active object (yellow selection outline) gets rotated too"  
     ) 
    
     rotation_angle_step = FloatProperty(  
         name="Rotation Angle Step",  
         default=math.radians(90),
         unit="ROTATION",
-        description="The angle which objects should get randomly rotated at"  
+        description="The angle at which objects should get randomly rotated around the rotation axis"  
     )  
     
     rotation_seed = IntProperty(  
@@ -104,7 +104,7 @@ class StackObjects(bpy.types.Operator):
         min=1,
         max=10000,
         default=1,  
-        description="Different seeds result in different rotations"  
+        description="Changing the rotation seed will result in different random rotations "  
     )  
 
     # get the furthest vertex position of an object along the specified axis in world space
@@ -119,7 +119,6 @@ class StackObjects(bpy.types.Operator):
 
     # Find the lowest and highest Z value amongst the object's verticies in world space
     def get_global_extremes(self, obj, axis_type):
-
         # get the coordinates of the object verticies in world space. Do that by multiplying the local vertex coodinates with the world space matrix
         glob_vertex_coordinates = [(obj.matrix_world @ v.co) for v in obj.data.vertices]
 
@@ -198,7 +197,7 @@ class StackObjects(bpy.types.Operator):
         for obj in context.selected_objects:
             if self.enable_rotation and (obj != active_obj or (obj == active_obj and self.rotate_base)):
                 # rotate by our seeded angle around our specified axis
-                seededRandomAngle = self.rotation_angle_step * random.Random(self.rotation_seed + obj_id).randint(0, 360)
+                seededRandomAngle = math.radians((math.degrees(self.rotation_angle_step) * (random.Random(self.rotation_seed + obj_id).randint(0, 180))) % 360)
 
                 if self.rotation_axis_type == 'X':
                     obj.rotation_euler[0] = seededRandomAngle
