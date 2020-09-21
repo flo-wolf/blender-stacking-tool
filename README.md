@@ -2,6 +2,8 @@
 ## Overview
 This Blender addon can be used to stack multiple meshes on top of each other in the direction of a specified axis. The created stack can be rotated and reordered using seeded randomization. Stacked objects will have no intersection with each other, so that their bounding boxes perfectly align.
 
+![Stacking_Tool_Overview Image](https://github.com/flo-wolf/blender-stacking-tool/blob/master/images/stacking_tool_process_showcase_s.png?raw=true)
+
 ## Usage
 The Stacking Tool is accessible through the Object Menu `Object > Stack Objects`. In order to use it, multiple meshes need to be selected, where one of them needs to be active (yellow selection outline).
 
