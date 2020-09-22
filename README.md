@@ -9,6 +9,9 @@ The Stacking Tool is accessible through the Object Menu `Object > Stack Objects`
 
 The tool is divided into two main components: Stacking and Rotation. Each has different options which alter how the resulting stack will look like. The selected objects get stacked by clicking the 'OK' button, or when performing changes to the settings after the 'OK' button has been clicked. All changes this tool makes to the objects can be undone.
 
+[Usage demonstration video](https://www.youtube.com/watch?v=_TIjMk0U53E)
+
+<br>
 
 ## Settings
 
